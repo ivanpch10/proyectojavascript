@@ -4,7 +4,6 @@ let choice = prompt("Ingrese 1 para convertir Celsius -> Fahrenheit \nIngrese 2 
 
 while (choice != 1 && choice != 2){
     choice = prompt ("Seleccione por favor una de las siguientes opciones:\n1 para convertir Celsius -> Fahrenheit \n2 para convertir Fahrenheit -> Celsius");
-    1
 }
 
 let temperature = prompt ("Ingrese Temperatura");
