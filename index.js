@@ -1,86 +1,95 @@
 
-let nombre = "";
-do {
-  nombre = prompt("Ingrese su nombre");
-} while (!isNaN(nombre));
-console.log("Bienvenido/a " + nombre + " al conversor de Divisas");
+const confirmarNombre = () => {
+  const nombre = document.getElementById("nombre").value;
+  const mensaje = nombre !== "" ? `Bienvenido/a ${nombre} al conversor de Divisas` : "";
+  document.getElementById("mensajeBienvenida").textContent = mensaje;
+};
 
-// Se define el array que almacena resultados de la conversión
+//array para guardar los resultados de conversion
 let resultadosConversion = [];
 
-// Función para obtener el día de la semana
-function obtenerDia() {
-  const diasSemana = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+// funcion para obtener dia de la semana
+function obtenerFecha() {
   const fechaActual = new Date();
-  const diaSemana = diasSemana[fechaActual.getDay()];
-  return diaSemana;
+  const dia = fechaActual.getDate();
+  const mes = fechaActual.getMonth() + 1; // Los meses en JavaScript se cuentan desde 0 (enero) hasta 11 (diciembre)
+  const año = fechaActual.getFullYear();
+
+  const fechaFormateada = `${dia < 10 ? '0' : ''}${dia}/${mes < 10 ? '0' : ''}${mes}/${año}`;
+  return fechaFormateada;
 }
-
-// Función para preguntar si desea saber la fecha actual
 function saberFecha() {
-  const respuesta = prompt("¿Deseas saber la fecha actual? (Sí / No)");
-
-  if (respuesta !== null) {
+  const respuesta = document.getElementById("respuestaFecha").value;
+  
+  if (respuesta !== "") {
     const respuestaNormalizada = respuesta.trim().toLowerCase();
-
-    if (respuestaNormalizada === "sí" || respuestaNormalizada === "si") {
-      const diaSemana = obtenerDia();
-      console.log("Hoy es " + diaSemana);
-    } else {
-      console.log("¡Ok! No te mostraré la fecha actual.");
-    }
+  
+    const fechaFormateada = obtenerFecha();
+    const fechaMessage = respuestaNormalizada === "sí" || respuestaNormalizada === "si" ? `Hoy es ${fechaFormateada}` : "¡Ok! No te mostraré la fecha actual.";
+    document.getElementById("mensajeFecha").textContent = fechaMessage;
   }
 }
 
-saberFecha();
+document.addEventListener("DOMContentLoaded", function() {
+  document.getElementById("botonFecha").addEventListener("click", saberFecha);
+});
+
 
 function convertir() {
-  let valor = 0;
+  const valor = parseFloat(document.getElementById("valor").value);
   let resultado = 0;
-  let dolar = 550;
-  let euro = 650;
-
-  //compruebo el numero
-  valor = parseFloat(document.getElementById("valor").value);
+  const dolar = 695;
+  const euro = 750;
 
   if (isNaN(valor) || valor <= 0) {
-    return console.log("Ingrese un número mayor a 0 ");
+    document.getElementById("mensajeResultado").textContent = "Ingrese un número mayor a 0";
+    return;
   }
 
-  let conversion = {}; // cree un objeto vacio para almacenar los detalles de conversion 
+  let conversion = {};
 
-  // dolar a peso
-  if (document.getElementById("uno").checked) {
-    resultado = valor / dolar;
-    resultado = resultado.toFixed(2);
-    console.log("El cambio de Pesos a Dolar blue es de: $" + resultado);
+  if (document.getElementById("dolar").checked) {
+    resultado = (valor / dolar).toFixed(2);
+    const cambioMessage = `El cambio de Pesos a Dolar blue es de: $${resultado}`;
 
     conversion.tipo = "Peso a dolar";
-    conversion.valorConvertido = "$" + resultado;
-    conversion.fecha = new Date().toISOString(); // almacena la fecha y hora actual
+    conversion.valorConvertido = `$${resultado}`;
+    conversion.fecha = new Date().toISOString();
     resultadosConversion.push(conversion);
-  }
 
-  // peso a euro
-  else if (document.getElementById("dos").checked) {
-    resultado = valor / euro;
-    resultado = resultado.toFixed(2);
-    console.log("El cambio de Pesos a Euro oficial es de: €" + resultado);
+    document.getElementById("mensajeResultado").textContent = cambioMessage;
+  } else if (document.getElementById("euro").checked) {
+    resultado = (valor / euro).toFixed(2);
+    const cambioMessage = `El cambio de Pesos a Euro oficial es de: €${resultado}`;
 
     conversion.tipo = "Peso a Euro";
-    conversion.valorConvertido = "€" + resultado;
-    conversion.fecha = new Date().toISOString(); 
+    conversion.valorConvertido = `€${resultado}`;
+    conversion.fecha = new Date().toISOString();
     resultadosConversion.push(conversion);
+
+    document.getElementById("mensajeResultado").textContent = cambioMessage;
   } else {
-    console.log("Debes completar todos los campos");
+    document.getElementById("mensajeResultado").textContent = "Debes completar todos los campos";
   }
+
+  // se guarda el resultado de la conversion al local storage
+  localStorage.setItem("conversiones", JSON.stringify(resultadosConversion));
 }
 
-console.log("Resultados de conversion:", resultadosConversion);
+// carga resultados de conversion desde el local storage
+if (localStorage.getItem("conversiones")) {
+  resultadosConversion = JSON.parse(localStorage.getItem("conversiones"));
+}
 
-// funcion para buscar las conversiones en el array 
+document.addEventListener("DOMContentLoaded", function() {
+  // Agregar el event listener después de que el DOM esté completamente cargado
+  document.getElementById("botonConvertir").addEventListener("click", convertir);
+});
+;
+
+// funcion para buscar las conversiones en el array
 function buscarConversion() {
-  const busqueda = prompt("Ingrese la búsqueda (por tipo o fecha):"); //peso a dolar/ peso a euro o fecha yyyy-mm-dd...
+  const busqueda = document.getElementById("busqueda").value;
   if (busqueda) {
     const busquedaNormalizada = busqueda.trim().toLowerCase();
     const resultados = resultadosConversion.filter(
@@ -90,16 +99,21 @@ function buscarConversion() {
     );
 
     if (resultados.length > 0) {
-      console.log("Resultados de la búsqueda:");
+      let resultadosHtml = "Resultados de la búsqueda:";
       resultados.forEach((conversion) => {
-        console.log(
-          `Tipo: ${conversion.tipo}, Valor Convertido: ${conversion.valorConvertido}, Fecha: ${conversion.fecha}` 
-        );
+        const { tipo, valorConvertido, fecha } = conversion;
+        resultadosHtml += `Tipo: ${tipo}, Valor Convertido: ${valorConvertido}, Fecha: ${fecha}<br>`;
       });
+      document.getElementById("resultadosBusqueda").innerHTML = resultadosHtml;
     } else {
-      console.log("No se encontraron resultados para la búsqueda.");
+      document.getElementById("resultadosBusqueda").innerHTML = "No se encontraron resultados para la búsqueda.";
     }
   } else {
-    console.log("Búsqueda inválida.");
+    document.getElementById("resultadosBusqueda").innerHTML = "Búsqueda inválida.";
   }
 }
+document.addEventListener("DOMContentLoaded", function() {
+
+  document.getElementById("botonBuscar").addEventListener("click", buscarConversion);
+});
+
