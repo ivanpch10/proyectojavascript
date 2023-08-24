@@ -1,15 +1,20 @@
-Este código crea una aplicación de conversión de divisas que permite al usuario ingresar su nombre, obtener la fecha actual, realizar conversiones de moneda y buscar conversiones anteriores según el tipo de conversión o la fecha. También almacena los resultados en el almacenamiento local para mantener un registro histórico de las conversiones realizadas.
+Conversor de Divisas
+Este proyecto es una aplicación web que permite a los usuarios convertir valores de pesos a dólares o euros utilizando datos en tiempo real de una API de tipo de cambio. Además de la conversión, la aplicación incluye funcionalidades para obtener la fecha actual, mostrar mensajes de bienvenida personalizados y buscar conversiones anteriores.
 
-1. confirmarNombre: Esta función se llama cuando se hace clic en el botón "Confirmar" después de ingresar un nombre en el campo de texto. Muestra un mensaje de bienvenida personalizado en el párrafo con el ID "mensajeBienvenida".
+Funcionalidades
+1. Confirmación de Nombre: Los usuarios pueden ingresar su nombre y hacer clic en el botón "Confirmar" para recibir un mensaje de bienvenida personalizado.
 
-2. obtenerFecha: Esta función obtiene la fecha actual y formatea el día, el mes y el año en el formato "dd/mm/aaaa".
+2. Obtención de Fecha Actual: Los usuarios pueden indicar si desean obtener la fecha actual haciendo clic en el botón "Obtener Fecha".
 
-3. saberFecha: Al hacer clic en el botón "Obtener Fecha", esta función verifica si el usuario ingresó "sí" o "si" en el campo de respuesta de fecha. Si es así, muestra el mensaje "Hoy es [fecha formateada]", de lo contrario, muestra "¡Ok! No te mostraré la fecha actual."
+3. Conversión de Divisas: Los usuarios pueden ingresar un valor en pesos y seleccionar el tipo de conversión (a dólar o euro). Luego de hacer clic en el botón "Convertir", la aplicación obtiene los valores de cambio de la API y muestra el resultado de la conversión.
 
-4. convertir: Esta función se activa cuando se hace clic en el botón "Convertir". Toma el valor ingresado en el campo "valor" y convierte esa cantidad a Dólares o Euros según la opción seleccionada. Luego, muestra el resultado en el párrafo con el ID "mensajeResultado" y también almacena la conversión en un array llamado "resultadosConversion" y en el almacenamiento local (local storage) para recordar las conversiones realizadas.
+4. Historial de Conversión: La aplicación guarda los resultados de conversión en un historial y los almacena localmente en el navegador.
 
-5. Carga de Resultados de Conversión: Cuando se carga la página, el script carga los resultados almacenados previamente en el almacenamiento local y los muestra en la sección "Resultados de Conversión" si hay alguno.
+5. Búsqueda de Conversión: Los usuarios pueden buscar conversiones anteriores por tipo de conversión o fecha utilizando el campo de búsqueda y el botón "Buscar". Los resultados se muestran en un cuadro de diálogo.
 
-6. buscarConversion: Esta función se activa cuando se hace clic en el botón "Buscar". Permite buscar conversiones anteriores en función del tipo de conversión (Dólar o Euro) o la fecha. Muestra los resultados de búsqueda en el elemento con el ID "resultadosBusqueda".
-
-7. Event Listeners: Se agregan varios event listeners para que las funciones se activen en respuesta a los clics en los botones y otros eventos.
+Tecnologías Utilizadas
+HTML
+CSS (con estilos personalizados y Bootstrap para diseño responsive)
+JavaScript
+SweetAlert2 para cuadros de diálogo interactivos
+API de tipo de cambio para obtener datos en tiempo real

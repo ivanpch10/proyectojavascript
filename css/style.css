@@ -1,8 +1,8 @@
 /* Estilos generales */
 body {
   font-family: Arial, sans-serif;
-  margin: 25px;
-  padding: 25px;
+  margin: 0;
+  padding: 0;
   background-color: #f0f0f0;
 }
 
@@ -39,6 +39,7 @@ button {
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  box-sizing: border-box; /* Añadido para incluir el padding en el ancho */
 }
 
 button {
@@ -65,3 +66,4 @@ h2 {
   border: 1px solid #ccc;
   border-radius: 5px;
 }
+
