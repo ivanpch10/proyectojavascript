@@ -1,4 +1,5 @@
 Conversor de Divisas
+
 Este proyecto es una aplicación web que permite a los usuarios convertir valores de pesos a dólares o euros utilizando datos en tiempo real de una API de tipo de cambio. Además de la conversión, la aplicación incluye funcionalidades para obtener la fecha actual, mostrar mensajes de bienvenida personalizados y buscar conversiones anteriores.
 
 Funcionalidades
@@ -13,8 +14,13 @@ Funcionalidades
 5. Búsqueda de Conversión: Los usuarios pueden buscar conversiones anteriores por tipo de conversión o fecha utilizando el campo de búsqueda y el botón "Buscar". Los resultados se muestran en un cuadro de diálogo.
 
 Tecnologías Utilizadas
+
 HTML
+
 CSS (con estilos personalizados y Bootstrap para diseño responsive)
+
 JavaScript
+
 SweetAlert2 para cuadros de diálogo interactivos
+
 API de tipo de cambio para obtener datos en tiempo real
